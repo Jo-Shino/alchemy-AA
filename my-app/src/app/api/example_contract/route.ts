@@ -40,10 +40,17 @@ export const POST = async (req: NextRequest) => {
     },
   });
 
+  const firstValue = await client.readContract({
+    abi: exampleContractAbi,
+    address: `0x${exampleContractAddress}`,
+    functionName: "x",
+  });
+  console.log(firstValue);
+
   const callData = encodeFunctionData({
     abi: exampleContractAbi,
     functionName: "change",
-    args: [BigInt(48)],
+    args: [BigInt(50)],
   });
 
   const result = await client.sendUserOperation({
@@ -62,4 +69,5 @@ export const POST = async (req: NextRequest) => {
   });
 
   console.log(x);
+  return NextResponse.json({ message: x, success: false });
 };
